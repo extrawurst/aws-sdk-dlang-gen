@@ -196,7 +196,7 @@ void writeOutput()
 		output ~= "}\n\n";
 	}
 
-	output ~= format("class %s {\n", serviceName);
+	output ~= format("interface %s {\n", serviceName);
 
 	foreach (op; ops)
 	{
