@@ -1,0 +1,5 @@
+name "aws-sdk-dlang-gen"
+description "A minimal D application."
+authors "Stephan Dilly"
+copyright "Copyright © 2017, Stephan Dilly"
+license "MIT"

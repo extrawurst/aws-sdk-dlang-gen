@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+aws-sdk-dlang-gen.so
+aws-sdk-dlang-gen.dylib
+aws-sdk-dlang-gen.dll
+aws-sdk-dlang-gen.a
+aws-sdk-dlang-gen.lib
+aws-sdk-dlang-gen-test-*
+*.exe
+*.o
+*.obj
+*.lst
