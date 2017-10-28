@@ -23,6 +23,11 @@ struct Operation
 	string doc;
 }
 
+static struct MetaData
+{
+	static JSONValue[string] data;
+}
+
 static struct Shapes
 {
 	static JSONValue[string] lists;
@@ -47,6 +52,8 @@ void main(string[] args)
 			parseShapes(obj);
 		if (key == "operations")
 			parseOps(obj);
+		if (key == "metadata")
+			parseMeta(obj);
 	}
 
 	assert("metadata" in json.object);
@@ -55,6 +62,14 @@ void main(string[] args)
 	writeOutput();
 
 	writeln(output.data);
+}
+
+void parseMeta(JSONValue json)
+{
+	foreach (key, obj; json.object)
+	{
+		MetaData.data[key] = obj;
+	}
 }
 
 void parseShapes(JSONValue json)
@@ -140,6 +155,15 @@ void parseShape(string name, JSONValue json)
 
 void writeOutput()
 {
+	output ~= format("module %s;\n\n", serviceName);
+
+	output ~= format("struct %sMetadata {\n", serviceName);
+	foreach (key, json; MetaData.data)
+	{
+		output ~= format("\tstatic const %s = \"%s\";\n", key, json.str);
+	}
+	output ~= "}\n\n";
+
 	foreach (key, json; Shapes.enums)
 	{
 		if ("documentation" in json)
@@ -190,7 +214,9 @@ void writeOutput()
 			auto type = structMemberJson["shape"].str;
 			if ("documentation" in structMemberJson)
 				output ~= format("\t///%s\n", structMemberJson["documentation"].str);
-			output ~= format("\t%s %s;\n\n", key, type);
+			if (type == key)
+				key = key ~ "_";
+			output ~= format("\t%s %s;\n\n", type, key);
 		}
 
 		output ~= "}\n\n";
