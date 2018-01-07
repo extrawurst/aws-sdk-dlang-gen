@@ -101,7 +101,8 @@ void parseOp(string name, JSONValue json)
 
 	op.name = name;
 
-	op.output = json["output"]["shape"].str;
+	if ("output" in json)
+		op.output = json["output"]["shape"].str;
 	op.input = json["input"]["shape"].str;
 
 	ops ~= op;
