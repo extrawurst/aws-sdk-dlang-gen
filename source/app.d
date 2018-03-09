@@ -19,7 +19,7 @@ struct Operation
 	string name;
 	//JSONValue[string] http;
 	string input;
-	string output;
+	string output = "void";
 	string doc;
 }
 
